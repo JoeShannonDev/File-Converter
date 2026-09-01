@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: file-converter
     steps:
       - uses: actions/checkout@v4
 
@@ -35,12 +38,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FileConverter-windows
-          path: dist/FileConverter.exe
+          path: file-converter/dist/FileConverter.exe
 
       - name: Attach EXE to GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/FileConverter.exe
+          files: file-converter/dist/FileConverter.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
